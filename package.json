@@ -1,0 +1,40 @@
+{
+  "name": "colorhunt-scraper",
+  "version": "1.0.0",
+  "description": "Simple code that scarpes all color palettes from colorhunt.co",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salimabsi/colorhunt-scraper.git"
+  },
+  "keywords": [
+    "puppeteer",
+    "cheerio",
+    "nodejs",
+    "typescript",
+    "colorhunt",
+    "colors",
+    "palettes",
+    "scraping",
+    "web-scraping"
+  ],
+  "author": "Salim Absi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salimabsi/colorhunt-scraper/issues"
+  },
+  "homepage": "https://github.com/salimabsi/colorhunt-scraper#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "cheerio": "^1.0.0-rc.10",
+    "puppeteer": "^13.6.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  }
+}
