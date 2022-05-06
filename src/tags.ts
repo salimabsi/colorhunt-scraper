@@ -15,7 +15,7 @@ export const getTags = async () => {
     loadOnScroll: false,
   });
 
-  // This selector will change after the browser js is loaded.
+  // This selector will be changed after the browser js is loaded.
   const tags = $(".tagBank .button.tag");
 
   const collections: Tag[] = [];
