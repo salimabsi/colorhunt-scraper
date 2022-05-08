@@ -1,45 +1,45 @@
-import puppeteer from "puppeteer";
-import * as cheerio from "cheerio";
+import puppeteer from 'puppeteer'
+import * as cheerio from 'cheerio'
 
 const scrollToBottom = async () => {
-  const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
+  const wait = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
-  let atBottom = false;
-  const scroller = document.documentElement;
-  let lastPosition = -1;
+  let atBottom = false
+  const scroller = document.documentElement
+  let lastPosition = -1
 
   while (!atBottom) {
-    scroller.scrollTop += 1000;
+    scroller.scrollTop += 1000
 
     // Wait until the new data is fetched.
-    await wait(1800);
-    const currentPosition = scroller.scrollTop;
+    await wait(1800)
+    const currentPosition = scroller.scrollTop
 
     if (currentPosition > lastPosition) {
-      lastPosition = currentPosition;
+      lastPosition = currentPosition
     } else {
-      atBottom = true;
+      atBottom = true
     }
   }
-};
+}
 
 export const getPage = async (url: string, { loadOnScroll = true }) => {
-  const browser = await puppeteer.launch({ headless: false });
-  const page = await browser.newPage();
+  const browser = await puppeteer.launch({ headless: false })
+  const page = await browser.newPage()
 
-  await page.setViewport({ width: 1336, height: 768 });
-  await page.goto(url);
+  await page.setViewport({ width: 1336, height: 768 })
+  await page.goto(url)
 
   // Scroll to bottom for lazy-loading data.
   if (loadOnScroll) {
-    await page.evaluate(scrollToBottom);
+    await page.evaluate(scrollToBottom)
   }
 
-  const content = await page.content();
+  const content = await page.content()
 
-  await browser.close();
+  await browser.close()
 
-  const $ = cheerio.load(content);
+  const $ = cheerio.load(content)
 
-  return $;
-};
+  return $
+}
