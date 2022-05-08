@@ -16,34 +16,42 @@ const millisecondsOf = (text: string) => {
 
   const number = parseInt(text.split(" ")[0]); // 1, 2, 3 ...etc
   const word = text.split(" ")[1]; // weeks, week, days ...etc
+  
+  const second = 1000;
+  const minute = 60 * second;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+  const week = 7 * day;
+  const month = 30 * day; // approximately
+  const year = 12 * month;
 
   switch (word) {
     case "millisecond":
     case "milliseconds":
-      return 1 * number; // ms of millisecond
+        return number * 1;
     case "second":
     case "seconds":
-      return 1000 * number; // ms of second
+        return number * second;
     case "minute":
     case "minutes":
-      return 60000 * number; // ms of minute
+        return number * minute;
     case "hour":
     case "hours":
-      return 3600000 * number; // ms of hour
+        return number * hour;
     case "day":
     case "days":
-      return 86400000 * number; // ms of day
+        return number * day;
     case "week":
     case "weeks":
-      return 604800000 * number; // ms of week
+        return number * week;
     case "month":
     case "months":
-      return 2629800000 * number; // ms of month
+        return number * month;
     case "year":
     case "years":
-      return 31556952000 * number; // ms of year
+        return number * year;
     default:
-      return 31556952000 * 1; // 1 year
+        return 1 * year;
   }
 };
 
