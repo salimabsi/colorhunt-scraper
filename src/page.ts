@@ -30,7 +30,7 @@ export const getPage = async (url: string, { loadOnScroll = true }) => {
   await page.setViewport({ width: 1336, height: 768 })
   await page.goto(url)
 
-  // Scroll to bottom for lazy-loading data.
+  // Scroll to bottom to have lazy-loading data.
   if (loadOnScroll) {
     await page.evaluate(scrollToBottom)
   }
