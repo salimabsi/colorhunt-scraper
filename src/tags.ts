@@ -1,10 +1,5 @@
 import { getPage } from './page'
 
-type Category = {
-  name: string
-  alt: string
-}
-
 export const getTags = async () => {
   const $ = await getPage('https://colorhunt.co/', {
     loadOnScroll: false,
@@ -13,14 +8,12 @@ export const getTags = async () => {
   // Will be used as a source by colorhunt to populate the search filter window after the browser's javascript is loaded
   const tags = $('.tagBank .button.tag')
 
-  const categories: Category[] = []
-
-  tags.each((_, tag) => {
-    const alt = tag.attribs['alt']
-    const name = tag.attribs['tag']
-
-    categories.push({ name, alt })
-  })
+  const categories = tags
+    .map((_, tag) => ({
+      name: tag.attribs['tag'].toString(),
+      alt: tag.attribs['alt'].toString(),
+    }))
+    .toArray()
 
   return {
     categories,
