@@ -12,6 +12,7 @@ export const getCategories = async () => {
     .map((_, tag) => ({
       name: tag.attribs['tag'],
       alt: tag.attribs['alt'],
+      colored: tag.attribs['type'] === 'color',
     }))
     .toArray()
 
