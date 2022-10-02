@@ -10,8 +10,8 @@ export const getCategories = async () => {
 
   const categories = tags
     .map((_, tag) => ({
-      name: tag.attribs['tag'].toString(),
-      alt: tag.attribs['alt'].toString(),
+      name: tag.attribs['tag'],
+      alt: tag.attribs['alt'],
     }))
     .toArray()
 
