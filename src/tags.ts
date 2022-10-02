@@ -1,11 +1,6 @@
 import { getPage } from './page'
-import * as cheerio from 'cheerio'
 
-type Node = cheerio.Node & {
-  data: string
-}
-
-type Tag = {
+type Category = {
   name: string
   alt: string
 }
@@ -15,25 +10,19 @@ export const getTags = async () => {
     loadOnScroll: false,
   })
 
-  // This selector will be changed after the browser js is loaded.
+  // Will be used as a source by colorhunt to populate the search filter window after the browser's javascript is loaded
   const tags = $('.tagBank .button.tag')
 
-  const collections: Tag[] = []
-  const colors: Tag[] = []
+  const categories: Category[] = []
 
   tags.each((_, tag) => {
-    const name = (tag.children[0] as Node).data
     const alt = tag.attribs['alt']
+    const name = tag.attribs['tag']
 
-    if (tag.attribs['type'] === 'color') {
-      colors.push({ name, alt })
-    } else {
-      collections.push({ name, alt })
-    }
+    categories.push({ name, alt })
   })
 
   return {
-    colors,
-    collections,
+    categories,
   }
 }
