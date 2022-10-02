@@ -1,6 +1,6 @@
 import { getPage } from './page'
 
-export const getTags = async () => {
+export const getCategories = async () => {
   const $ = await getPage('https://colorhunt.co/', {
     loadOnScroll: false,
   })
