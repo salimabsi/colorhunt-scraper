@@ -1,6 +1,6 @@
 import { getPage } from './page'
 
-export const getCategories = async () => {
+async function _getCategories() {
   const $ = await getPage('https://colorhunt.co/', {
     loadOnScroll: false,
   })
@@ -16,7 +16,20 @@ export const getCategories = async () => {
     }))
     .toArray()
 
-  return {
-    categories,
+  return categories
+}
+
+export async function getCategories() {
+  try {
+    console.log('Fetching categories...')
+    const categories = await _getCategories()
+    console.log('Categories fetched successfully.')
+
+    return {
+      categories,
+    }
+  } catch (error) {
+    console.log('Error fetching categories\n', error)
+    process.exit(1)
   }
 }

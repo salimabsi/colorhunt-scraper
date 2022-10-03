@@ -1,17 +1,12 @@
 import * as fs from 'fs'
 import { getCategories } from './categories'
-import { getColors } from './colors'
+import { getPalettes } from './palettes'
 
-const runApp = async () => {
-  console.log('Fetching categories...')
-  const categories = await getCategories()
-  console.log('Categories fetched successfully.')
+async function runApp() {
+  const { categories } = await getCategories()
+  const { palettes } = await getPalettes()
 
-  console.log('Fetching colors...')
-  const colors = await getColors()
-  console.log('Colors fetched successfully.')
-
-  fs.writeFileSync('colorhunt.json', JSON.stringify({ categories, colors }))
+  fs.writeFileSync('colorhunt.json', JSON.stringify({ categories, palettes }))
 }
 
 runApp()
