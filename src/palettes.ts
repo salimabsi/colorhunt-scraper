@@ -65,7 +65,10 @@ function normalizePalette(palette: Palette) {
 async function fetchPalette(id: string) {
   try {
     // It returns an array of one palette.
-    const { data } = await axios.post<[Palette]>('https://colorhunt.co/php/single.php', `single=${id}`)
+    const { data } = await axios.post<[Palette]>(
+      'https://colorhunt.co/php/single.php',
+      `single=${id}`,
+    )
 
     return data[0]
   } catch (error) {
