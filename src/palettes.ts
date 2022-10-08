@@ -53,6 +53,14 @@ function timeAgoToMs(text: string) {
   }
 }
 
+const now = Date.now()
+
+function parseTimeAgo(text: string) {
+  const ms = timeAgoToMs(text)
+
+  return new Date(now - ms).getTime()
+}
+
 async function fetchPalette(id: string) {
   try {
     // It returns an array of one palette.
@@ -119,7 +127,7 @@ async function _getPalettes() {
     const normalizedPalette = {
       code: id,
       likes: parseInt(palette.likes),
-      date: timeAgoToMs(palette.date),
+      date: parseTimeAgo(palette.date),
       categories: palette.tags,
     }
 
