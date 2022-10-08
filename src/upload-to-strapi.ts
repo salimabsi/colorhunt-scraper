@@ -1,6 +1,7 @@
+import * as fs from 'fs'
+import path from 'path'
 import dotenv from 'dotenv'
 import axios from 'axios'
-import { colorhunt } from './colorhunt'
 
 dotenv.config()
 
@@ -16,7 +17,10 @@ type Palette = {
   categories: number[]
 }
 
-type Colorhunt = typeof colorhunt
+type Colorhunt = {
+  categories: Category[]
+  palettes: Palette[]
+}
 
 type Uploaded<T> = {
   data: {
@@ -99,12 +103,23 @@ async function uploadPalettes(
   return uploadedPalettes
 }
 
-export async function uploadColorhunt(colorhunt: Colorhunt) {
-  const uploadedCategories = await uploadCategories(colorhunt.categories)
+function getColorhunt() {
+  const raw = fs.readFileSync(path.join(process.cwd(), 'data', 'colorhunt.json'), 'utf-8')
+  const colorhunt: Colorhunt = JSON.parse(raw)
+  return colorhunt
+}
 
+export async function uploadColorhunt() {
+  console.log('Start uploading data...')
+
+  const colorhunt = getColorhunt()
+  const uploadedCategories = await uploadCategories(colorhunt.categories)
   const uploadedPalettes = await uploadPalettes(colorhunt.palettes, uploadedCategories)
 
+  console.log('Data uploaded successfully.')
+
+  console.log(uploadedCategories)
   console.log(uploadedPalettes)
 }
 
-uploadColorhunt(colorhunt)
+uploadColorhunt()
