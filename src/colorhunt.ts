@@ -27,7 +27,7 @@ export const colorhunt = {
       name: 'yellow',
       colored: true,
     },
-    { name: 'grey', alt: 'silver gray luxury business tech calm gris metal', colored: true },
+    { name: 'grey', colored: true },
     {
       name: 'pastel',
       colored: false,

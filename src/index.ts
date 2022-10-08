@@ -6,7 +6,7 @@ async function runApp() {
   const { categories } = await getCategories()
   const { palettes } = await getPalettes()
 
-  fs.writeFileSync('colorhunt.json', JSON.stringify({ categories, palettes }))
+  fs.writeFileSync('data/colorhunt.json', JSON.stringify({ categories, palettes }))
 }
 
 runApp()
