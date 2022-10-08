@@ -19,7 +19,7 @@ type Palette = {
 
 type Colorhunt = {
   categories: Category[]
-  palettes: Palette[]
+  palettes: (Omit<Palette, 'categories'> & { categories: string })[]
 }
 
 type Uploaded<T> = {
