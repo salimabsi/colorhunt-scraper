@@ -11,7 +11,6 @@ async function _getCategories() {
   const categories = tags
     .map((_, category) => ({
       name: category.attribs['tag'],
-      alt: category.attribs['alt'],
       colored: category.attribs['type'] === 'color',
     }))
     .toArray()
