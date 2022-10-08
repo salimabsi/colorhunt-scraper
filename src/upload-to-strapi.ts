@@ -28,7 +28,7 @@ type Uploaded<T> = {
 async function upload<T>(path: string, data: T) {
   try {
     const response = await axios.post<Uploaded<T>>(
-      `http://localhost:1337/api/${path}`,
+      `${process.env.STRAPI_API_URL}/api/${path}`,
       {
         data: data,
       },
