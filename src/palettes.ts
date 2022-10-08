@@ -53,15 +53,6 @@ function timeAgoToMs(text: string) {
   }
 }
 
-function normalizePalette(palette: Palette) {
-  return {
-    code: palette.code,
-    likes: parseInt(palette.likes),
-    date: timeAgoToMs(palette.date),
-    categories: palette.tags,
-  }
-}
-
 async function fetchPalette(id: string) {
   try {
     // It returns an array of one palette.
@@ -101,7 +92,7 @@ async function fetchAllPaletteIDs() {
       break
     }
     palettes.push(...data)
-    console.log('IDs fetched: ' + palettes.length)
+    console.log(`${palettes.length} IDs fetched`)
   }
 
   const ids = palettes.map((p) => p.code)
@@ -125,7 +116,14 @@ async function _getPalettes() {
       continue
     }
 
-    palettes.push(normalizePalette(palette))
+    const normalizedPalette = {
+      code: id,
+      likes: parseInt(palette.likes),
+      date: timeAgoToMs(palette.date),
+      categories: palette.tags,
+    }
+
+    palettes.push(normalizedPalette)
   }
 
   return palettes
