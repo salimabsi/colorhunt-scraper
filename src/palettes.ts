@@ -58,7 +58,7 @@ function normalizePalette(palette: Palette) {
     code: palette.code,
     likes: parseInt(palette.likes),
     date: timeAgoToMs(palette.date),
-    tags: palette.tags,
+    categories: palette.tags,
   }
 }
 

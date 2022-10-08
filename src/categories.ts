@@ -9,10 +9,10 @@ async function _getCategories() {
   const tags = $('.tagBank .button.tag')
 
   const categories = tags
-    .map((_, tag) => ({
-      name: tag.attribs['tag'],
-      alt: tag.attribs['alt'],
-      colored: tag.attribs['type'] === 'color',
+    .map((_, category) => ({
+      name: category.attribs['tag'],
+      alt: category.attribs['alt'],
+      colored: category.attribs['type'] === 'color',
     }))
     .toArray()
 
