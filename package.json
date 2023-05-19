@@ -1,16 +1,17 @@
 {
-  "name": "colorhunt-scraper",
-  "version": "1.0.0",
-  "description": "Simple code that scarpes all color palettes from colorhunt.co",
+  "name": "colorhunt.co-scraper",
+  "version": "0.1.0",
+  "description": "Nodejs scrapper that scarpes all palettes data from colorhunt.co",
+  "author": "Salim Absi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salimabsi/colorhunt-scraper.git"
+  },
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
     "upload": "ts-node src/upload-to-strapi.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/salimabsi/colorhunt-scraper.git"
   },
   "keywords": [
     "puppeteer",
@@ -23,12 +24,6 @@
     "scraping",
     "web-scraping"
   ],
-  "author": "Salim Absi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/salimabsi/colorhunt-scraper/issues"
-  },
-  "homepage": "https://github.com/salimabsi/colorhunt-scraper#readme",
   "dependencies": {
     "axios": "^0.26.1",
     "cheerio": "^1.0.0-rc.10",
