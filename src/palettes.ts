@@ -76,7 +76,7 @@ async function getPalettes() {
     const palettes = []
 
     for (const [index, id] of ids.entries()) {
-      console.log(`Fetching palette: ${index}/${ids.length}.`)
+      console.log(`Fetching palette: ${index}/${ids.length}`)
 
       const palette = await fetchPalette(id)
 
