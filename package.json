@@ -1,7 +1,7 @@
 {
   "name": "colorhunt.co-scraper",
   "version": "0.1.0",
-  "description": "Nodejs scrapper that scarpes all palettes data from colorhunt.co",
+  "description": "Nodejs scrapper that scrapes all palettes data from colorhunt.co",
   "author": "Salim Absi",
   "main": "src/index.ts",
   "scripts": {
