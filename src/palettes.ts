@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { parseDate } from './date'
 
 type Palette = {
   code: string
@@ -7,147 +8,99 @@ type Palette = {
   tags: string
 }
 
-function timeAgoToMs(text: string) {
-  const second = 1000
-  const minute = 60 * second
-  const hour = 60 * minute
-  const day = 24 * hour
-  const week = 7 * day
-  const month = 30 * day
-  const year = 12 * month
-
-  if (text === 'Yesterday') {
-    return day
-  }
-
-  const number = parseInt(text.split(' ')[0]) // 1, 2, 3 ...etc
-  const unit = text.split(' ')[1] // weeks, week, days ...etc
-
-  switch (unit) {
-    case 'millisecond':
-    case 'milliseconds':
-      return number * 1
-    case 'second':
-    case 'seconds':
-      return number * second
-    case 'minute':
-    case 'minutes':
-      return number * minute
-    case 'hour':
-    case 'hours':
-      return number * hour
-    case 'day':
-    case 'days':
-      return number * day
-    case 'week':
-    case 'weeks':
-      return number * week
-    case 'month':
-    case 'months':
-      return number * month
-    case 'year':
-    case 'years':
-      return number * year
-    default:
-      return 1 * year
-  }
-}
-
-const now = Date.now()
-
-function parseTimeAgo(text: string) {
-  const ms = timeAgoToMs(text)
-
-  return new Date(now - ms).getTime()
-}
-
-async function fetchPalette(id: string) {
+/**
+ * Fetches individual palette.
+ */
+async function fetchPalette(id: string): Promise<Palette | null> {
   try {
-    // It returns an array of one palette.
+    // It returns an array of a single palette.
     const { data } = await axios.post<[Palette]>(
       'https://colorhunt.co/php/single.php',
       `single=${id}`,
     )
 
-    return data[0]
+    return data[0] || null
   } catch (error) {
     return null
   }
 }
 
-async function fetchPagePalettes(step: number) {
-  const { data } = await axios.post<Palette[]>(
-    'https://colorhunt.co/php/feed.php',
-    `step=${step}&sort=new&tags=&timeframe=4000`,
-  )
+/**
+ * Fetches palettes of a next page.
+ */
+async function fetchPagePalettes(pageNumber: number): Promise<Pick<Palette, 'code'>[]> {
+  try {
+    const { data } = await axios.post<Pick<Palette, 'code'>[]>(
+      'https://colorhunt.co/php/feed.php',
+      `step=${pageNumber}&sort=new&tags=&timeframe=4000`,
+    )
 
-  return data
+    return data
+  } catch (error) {
+    console.error(`Failed fetching page palettes. Page ${pageNumber}.`)
+    throw error
+  }
 }
 
-async function fetchAllPaletteIDs() {
-  // Maximum pages to load on scroll
-  const steps = Array(100)
+/**
+ * Fetches all palette IDs for fetching individual palettes.
+ */
+async function fetchAllPaletteIDs(): Promise<string[]> {
+  // Overestimated page numbers to loop through.
+  const pageNumbers = Array(100)
     .fill(null)
     .map((_, i) => i)
 
-  const palettes = []
+  const palettes: Pick<Palette, 'code'>[] = []
 
-  for (const step of steps) {
-    const data = await fetchPagePalettes(step)
+  for (const pageNumber of pageNumbers) {
+    const data = await fetchPagePalettes(pageNumber)
 
-    // No data from the next page means all palletes are fetched
     if (data.length === 0) {
       break
     }
+
     palettes.push(...data)
-    console.log(`${palettes.length} IDs fetched`)
+
+    console.log(`${palettes.length} IDs fetched...`)
   }
 
-  const ids = palettes.map((p) => p.code)
-
-  return ids
+  return palettes.map(({ code }) => code)
 }
 
-async function _getPalettes() {
-  const ids = await fetchAllPaletteIDs()
-
-  const palettes = []
-  let current = 1
-
-  for (const id of ids) {
-    console.log(`Fetching individual palette: ${current}/${ids.length}`)
-    current++
-
-    const palette = await fetchPalette(id)
-    if (!palette) {
-      console.log(`Failed fetching: ${current}`)
-      continue
-    }
-
-    const normalizedPalette = {
-      code: id,
-      likes: parseInt(palette.likes),
-      date: parseTimeAgo(palette.date),
-      categories: palette.tags,
-    }
-
-    palettes.push(normalizedPalette)
-  }
-
-  return palettes
-}
-
-export async function getPalettes() {
+async function getPalettes() {
   try {
     console.log('Fetching palettes...')
-    const palettes = await _getPalettes()
+
+    const ids = await fetchAllPaletteIDs()
+    const palettes = []
+
+    for (const [index, id] of ids.entries()) {
+      console.log(`Fetching palette: ${index}/${ids.length}.`)
+
+      const palette = await fetchPalette(id)
+
+      if (!palette) {
+        console.log(`Failed fetching palette: ${id}.`)
+        continue
+      }
+
+      // The ID is just a compined palette codes.
+      palettes.push({
+        code: id,
+        likes: parseInt(palette.likes),
+        date: parseDate(palette.date),
+        tags: palette.tags,
+      })
+    }
+
     console.log('Palettes fetched successfully.')
 
-    return {
-      palettes,
-    }
+    return { palettes }
   } catch (error) {
-    console.log('Error fetching palettes\n', error)
-    process.exit(1)
+    console.error('Failed fetching palettes.')
+    throw error
   }
 }
+
+export { getPalettes }

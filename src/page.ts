@@ -11,7 +11,7 @@ const scrollToBottom = async () => {
   while (!atBottom) {
     scroller.scrollTop += 1000
 
-    // Wait until the new data is fetched.
+    // Wait until the lazy-loaded data is loaded and rendered in the browser.
     await wait(1800)
     const currentPosition = scroller.scrollTop
 
