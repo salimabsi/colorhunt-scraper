@@ -1,4 +1,4 @@
-import { writeFile } from 'fs/promises'
+import { outputJSON } from 'fs-extra'
 import { getCategories } from './categories'
 import { getPalettes } from './palettes'
 
@@ -7,7 +7,7 @@ async function runScrapper() {
     const { categories } = await getCategories()
     const { palettes } = await getPalettes()
 
-    writeFile('data/colorhunt.json', JSON.stringify({ categories, palettes }))
+    outputJSON('data/colorhunt.json', { categories, palettes })
     console.log('Data saved successfully.')
   } catch (error) {
     console.error('Error scraping ColorHunt.co\n', error)
