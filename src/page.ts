@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import * as cheerio from 'cheerio'
+import { load } from 'cheerio'
 
 const scrollToBottom = async () => {
   const wait = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -39,7 +39,7 @@ export const getPage = async (url: string, { loadOnScroll = true }) => {
 
   await browser.close()
 
-  const $ = cheerio.load(content)
+  const $ = load(content)
 
   return $
 }
