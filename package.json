@@ -5,9 +5,7 @@
   "author": "Salim Absi",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "upload": "ts-node src/upload-to-strapi.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "fire": "ts-node src/index.ts"
   },
   "keywords": [
     "puppeteer",
