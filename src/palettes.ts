@@ -16,7 +16,7 @@ async function fetchPalette(id: string): Promise<Palette | null> {
     // It returns an array of a single palette.
     const { data } = await axios.post<[Palette]>(
       'https://colorhunt.co/php/single.php',
-      `single=${id}`,
+      `single=${id}`
     )
 
     return data[0] || null
@@ -32,7 +32,7 @@ async function fetchPagePalettes(pageNumber: number): Promise<Pick<Palette, 'cod
   try {
     const { data } = await axios.post<Pick<Palette, 'code'>[]>(
       'https://colorhunt.co/php/feed.php',
-      `step=${pageNumber}&sort=new&tags=&timeframe=4000`,
+      `step=${pageNumber}&sort=new&tags=&timeframe=4000`
     )
 
     return data

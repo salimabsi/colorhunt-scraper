@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@salimabsi/prettier-config':
+    specifier: ^0.1.1
+    version: 0.1.1
   '@types/node':
     specifier: ^18.16.13
     version: 18.16.13
@@ -10,6 +13,9 @@ dependencies:
   cheerio:
     specifier: ^1.0.0-rc.12
     version: 1.0.0-rc.12
+  prettier:
+    specifier: ^2.8.8
+    version: 2.8.8
   puppeteer:
     specifier: ^20.2.1
     version: 20.2.1(typescript@5.0.4)
@@ -88,6 +94,10 @@ packages:
       yargs: 17.7.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@salimabsi/prettier-config@0.1.1:
+    resolution: {integrity: sha512-9n0OIltP64k+N8nYBJlnfNki31DHl2fwmklQQFlIPsgAjyvMxcNwhcLsM/RWjP2bNqU6EpBWOKkVBTus5LoBqw==}
     dev: false
 
   /@tootallnate/once@2.0.0:
@@ -643,6 +653,12 @@ packages:
 
   /pend@1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
+    dev: false
+
+  /prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: false
 
   /progress@2.0.3:
